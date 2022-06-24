@@ -1,0 +1,46 @@
+<div class="container">
+  <header class="jumbotron">
+    <h1 class="display-4">Cleaners</h1>
+  </header>
+  <div class="input-group" *ngIf="!isUserAdmin">
+    <input class="form-control" placeholder="yyyy-mm-dd" [minDate]="minPickerDate"
+           name="dp" [(ngModel)]="selectedDate" ngbDatepicker #d="ngbDatepicker" (dateSelect)="onDateSelect($event)">
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+    </div>
+  </div>
+  <ngb-accordion #acc="ngbAccordion" *ngIf="isUserAdmin">
+    <ngb-panel title="Add Cleaner">
+      <ng-template ngbPanelContent>
+        <form class="text-center border border-light p-5" [formGroup]="addCleanerForm" (ngSubmit)="addCleaner()">
+          <p class="h4 mb-4">Add Cleaner</p>
+          <input type="text" id="badge" formControlName="badge" class="form-control mb-4" placeholder="Badge" />
+          <input type="text" id="name" formControlName="name" class="form-control mb-4" placeholder="Name" />
+          <ngb-alert *ngIf="showAddResult()" type="secondary">{{ addResult }}</ngb-alert>
+          <button mdbBtn color="info" block="true" type="submit">Add</button>
+        </form>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+  <br />
+  <ngb-alert *ngIf="showFetchResult()" type="secondary" (closed)="closeFetchResult()">{{ fetchResult }}</ngb-alert>
+  <ngb-alert *ngIf="showBookResult()" type="secondary" (closed)="closeBookResult()">Booking: {{ bookingResult }}</ngb-alert>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Badge</th>
+      <th scope="col">Name</th>
+      <th scope="col" *ngIf="!isUserAdmin"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let cleaner of cleaners;">
+      <td>{{ cleaner.badge }}</td>
+      <td>{{ cleaner.name }}</td>
+      <td *ngIf="!isUserAdmin">
+        <button class="btn btn-outline-secondary" (click)="bookButtonClick($event, cleaner)" type="button">Book</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

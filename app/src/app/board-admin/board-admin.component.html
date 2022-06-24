@@ -1,0 +1,37 @@
+<div class="container">
+  <header class="jumbotron">
+    <h1 class="display-4">Other Admins</h1>
+  </header>
+  <ngb-accordion #acc="ngbAccordion">
+    <ngb-panel title="Add Admin">
+      <ng-template ngbPanelContent>
+        <form class="text-center border border-light p-5" [formGroup]="addAdminForm" (ngSubmit)="onSubmit()">
+          <p class="h4 mb-4">Add Admin</p>
+          <input type="text" id="name" formControlName="name" class="form-control mb-4" placeholder="Name" />
+          <input type="text" id="username" formControlName="username" class="form-control mb-4" placeholder="Username" />
+          <input type="text" id="password" formControlName="password" class="form-control mb-4" placeholder="Password" />
+          <ngb-alert *ngIf="showAddResult()" type="secondary">{{ addResult }}</ngb-alert>
+          <button mdbBtn color="info" block="true" type="submit">Add</button>
+        </form>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+  <br />
+  <ngb-alert *ngIf="showFetchResult()" type="secondary" (closed)="closeFetchResult()">{{ fetchResult }}</ngb-alert>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Username</th>
+      <th scope="col">Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of admins;">
+      <th scope="row">{{ user.id }}</th>
+      <td>{{ user.username }}</td>
+      <td>{{ user.name }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,31 @@
+<div class="container" *ngIf="currentUser; else loading">
+  <header class="jumbotron">
+    <h3>
+      <strong>{{ currentUser.username }}</strong> Profile
+    </h3>
+  </header>
+  <p>
+    <strong>Name:</strong>
+    {{ currentUser.name }}
+  </p>
+  <p>
+    <strong>Role:</strong>
+    {{ currentUser.role }}
+  </p>
+  <ngb-accordion #acc="ngbAccordion">
+    <ngb-panel title="Password">
+      <ng-template ngbPanelContent>
+        <form class="text-center border border-light p-5" [formGroup]="updatePasswordForm" (ngSubmit)="onSubmit()">
+          <p class="h4 mb-4">Update Password</p>
+          <input type="text" id="password" formControlName="password" class="form-control mb-4" placeholder="Password" />
+          <ngb-alert *ngIf="showUpdateResult()" type="secondary">{{ updateResult }}</ngb-alert>
+          <button mdbBtn color="info" block="true" type="submit">Update</button>
+        </form>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+</div>
+
+<ng-template #loading>
+  <ngb-alert type="secondary">{{ error }}</ngb-alert>
+</ng-template>

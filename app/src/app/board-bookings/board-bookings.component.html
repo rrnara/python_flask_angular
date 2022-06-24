@@ -1,0 +1,40 @@
+<div class="container">
+  <header class="jumbotron">
+    <h1 class="display-4">Bookings</h1>
+  </header>
+  <div class="input-group" *ngIf="isUserAdmin">
+    <input class="form-control" placeholder="yyyy-mm-dd"
+           name="dp" [(ngModel)]="selectedDate" ngbDatepicker #d="ngbDatepicker" (dateSelect)="onDateSelect($event)">
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+    </div>
+  </div>
+  <br />
+  <ngb-alert *ngIf="showFetchResult()" type="secondary" (closed)="closeFetchResult()">{{ fetchResult }}</ngb-alert>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Date</th>
+      <th scope="col">Cleaner</th>
+      <th scope="col" *ngIf="isUserAdmin">User</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let booking of bookings;">
+      <th scope="row">{{ booking.id }}</th>
+      <td>{{ booking.date_booked }}</td>
+      <td>
+        Badge: {{ booking.cleaner.badge }}
+        <br />
+        Name: {{ booking.cleaner.name }}
+      </td>
+      <td *ngIf="isUserAdmin">
+        Username: {{ booking.user.username }}
+        <br />
+        Name: {{ booking.user.name }}
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
