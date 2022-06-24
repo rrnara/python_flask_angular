@@ -25,4 +25,5 @@
    set FLASK_APP=run.py
    flask run
    ```
-   
+7. Use default admin account to add cleaners: check seed.py to get username/password
+8. Register as new user to book cleaners on certain dates
